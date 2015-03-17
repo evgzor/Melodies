@@ -95,7 +95,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int lastRow= _dataObjects.count - REQUEST_NUMBER/2;
+    NSUInteger lastRow= _dataObjects.count - REQUEST_NUMBER/2;
     if(indexPath.row == lastRow)
     {
         [self requestDataFromServer];
@@ -115,6 +115,11 @@ static NSString *CellIdentifier = @"Cell";
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [[UIView alloc] init];
 }
 
 #pragma mark - server processing
