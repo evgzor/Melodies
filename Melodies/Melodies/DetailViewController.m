@@ -85,9 +85,14 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
-    [self.scrollView setContentOffset:bottomOffset animated:YES];
-}
+    CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height
+                                       - self.scrollView.bounds.size.height);
+    if (bottomOffset.y >= 0.0)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.scrollView setContentOffset:bottomOffset animated:YES];
+        });
+    }}
 
 -(void)viewWillDisappear:(BOOL)animated
 {
