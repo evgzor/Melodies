@@ -29,6 +29,11 @@
 
 @property (weak, nonatomic) IBOutlet UISlider* aSlider;
 
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property BOOL isPlaying;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 -(IBAction)playMelody:(id)sender;
 
 @end
@@ -77,8 +82,16 @@
 
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
+    [self.scrollView setContentOffset:bottomOffset animated:YES];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [_audioPlayer pause];
     [_sliderTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -124,7 +137,19 @@
 
 -(IBAction)playMelody:(id)sender
 {
-    [_audioPlayer play];
+    if(_isPlaying)
+    {
+        [_audioPlayer pause];
+        [_playButton setTitle:@"Play" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_audioPlayer play];
+        [_playButton setTitle:@"Pause" forState:UIControlStateNormal];
+    }
+    
+    _isPlaying = !_isPlaying;
+    
 }
 
 
