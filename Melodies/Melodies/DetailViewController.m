@@ -46,6 +46,8 @@
     }
 }
 
+#pragma mark - ViewCycle managment
+
 - (void)configureView {
     // Update the user interface for the detail item.
     if (self.detailItem) {
@@ -71,6 +73,22 @@
     //
     // Set the valueChanged target
     [_aSlider addTarget:self action:@selector(sliderChanged:) forControlEvents:UIControlEventValueChanged];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:_playerItem];
+
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [_audioPlayer pause];
+    [_sliderTimer invalidate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Slider player managment
+- (IBAction)sliderChanged:(UISlider *)sender {
+    // Fast skip the music when user scroll the UISlider
+    CMTime seekTime = CMTimeMake(CMTimeGetSeconds(_audioPlayer.currentItem.asset.duration)*sender.value/ERR_COOF, 1);
+    [_audioPlayer seekToTime:seekTime];
 }
 
 - (void)updateSlider {
@@ -78,18 +96,6 @@
     double duration = CMTimeGetSeconds(_audioPlayer.currentItem.duration)/ERR_COOF;
     double time = CMTimeGetSeconds(_audioPlayer.currentTime);
     _aSlider.value = (CGFloat) (time / duration);
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [_audioPlayer pause];
-    [_sliderTimer invalidate];
-}
-
-- (IBAction)sliderChanged:(UISlider *)sender {
-    // Fast skip the music when user scroll the UISlider
-    CMTime seekTime = CMTimeMake(CMTimeGetSeconds(_audioPlayer.currentItem.asset.duration)*sender.value/ERR_COOF, 1);
-    [_audioPlayer seekToTime:seekTime];
 }
 
 #pragma mark - Memory Managment
@@ -105,6 +111,8 @@
     
     self.detailItem = nil;
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -119,5 +127,14 @@
     [_audioPlayer play];
 }
 
+
+#pragma mark - AVPLayer callback
+
+-(void)itemDidFinishPlaying:(NSNotification *) notification {
+    // Will be called when AVPlayer finishes playing playerItem
+    CMTime seekTime = CMTimeMake(0, 1);
+    [_audioPlayer seekToTime:seekTime];
+    _aSlider.value = 0.;
+}
 
 @end
