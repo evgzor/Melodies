@@ -35,7 +35,7 @@ NSString *const kMelodyModelDataMelodies = @"melodies";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
-    NSObject *receivedMelodies = [dict objectForKey:kMelodyModelDataMelodies];
+    NSObject *receivedMelodies = dict[kMelodyModelDataMelodies];
     NSMutableArray *parsedMelodies = [NSMutableArray array];
     if ([receivedMelodies isKindOfClass:[NSArray class]]) {
         for (NSDictionary *item in (NSArray *)receivedMelodies) {
@@ -81,14 +81,14 @@ NSString *const kMelodyModelDataMelodies = @"melodies";
 #pragma mark - Helper Method
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict
 {
-    id object = [dict objectForKey:aKey];
+    id object = dict[aKey];
     return [object isEqual:[NSNull null]] ? nil : object;
 }
 
 
 #pragma mark - NSCoding Methods
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
 

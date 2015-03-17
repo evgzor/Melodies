@@ -38,6 +38,8 @@
 		0D2C03251AB83CE500A45056 /* APINetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C03241AB83CE500A45056 /* APINetController.m */; };
 		0D2C032C1AB845A300A45056 /* MelodyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C032B1AB845A300A45056 /* MelodyTableViewCell.m */; };
 		0D2C03301AB84BC900A45056 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C032F1AB84BC900A45056 /* AsyncImageView.m */; };
+		0D2C033A1AB89ACB00A45056 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D2C03391AB89ACB00A45056 /* Default-568h@2x.png */; };
+		0D2C033E1AB89D8200A45056 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C033D1AB89D8200A45056 /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +117,9 @@
 		0D2C032B1AB845A300A45056 /* MelodyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MelodyTableViewCell.m; path = View/MelodyTableViewCell.m; sourceTree = "<group>"; };
 		0D2C032E1AB84BC900A45056 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		0D2C032F1AB84BC900A45056 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		0D2C03391AB89ACB00A45056 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		0D2C033C1AB89D8200A45056 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		0D2C033D1AB89D8200A45056 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +177,9 @@
 		0D2C02B51AB8394400A45056 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0D2C02B91AB8394400A45056 /* AppDelegate.h */,
+				0D2C02BA1AB8394400A45056 /* AppDelegate.m */,
+				0D2C03391AB89ACB00A45056 /* Default-568h@2x.png */,
 				0D2C02B61AB8394400A45056 /* Info.plist */,
 				0D2C02B71AB8394400A45056 /* main.m */,
 			);
@@ -198,8 +206,6 @@
 		0D2C02DE1AB83A6300A45056 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0D2C02B91AB8394400A45056 /* AppDelegate.h */,
-				0D2C02BA1AB8394400A45056 /* AppDelegate.m */,
 				0D2C02BC1AB8394400A45056 /* MasterViewController.h */,
 				0D2C02BD1AB8394400A45056 /* MasterViewController.m */,
 				0D2C02BF1AB8394400A45056 /* DetailViewController.h */,
@@ -225,6 +231,7 @@
 		0D2C02EA1AB83C8400A45056 /* ThirdParties */ = {
 			isa = PBXGroup;
 			children = (
+				0D2C033B1AB89D8200A45056 /* MBProgressHUD */,
 				0D2C032D1AB84BC900A45056 /* AsyncImageView */,
 				0D2C02EB1AB83C8400A45056 /* AFNetworking */,
 				0D2C02FF1AB83C8400A45056 /* UIKit+AFNetworking */,
@@ -309,6 +316,15 @@
 			path = AsyncImageView;
 			sourceTree = "<group>";
 		};
+		0D2C033B1AB89D8200A45056 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				0D2C033C1AB89D8200A45056 /* MBProgressHUD.h */,
+				0D2C033D1AB89D8200A45056 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D2C02C41AB8394400A45056 /* Main.storyboard in Resources */,
+				0D2C033A1AB89ACB00A45056 /* Default-568h@2x.png in Resources */,
 				0D2C02C91AB8394400A45056 /* LaunchScreen.xib in Resources */,
 				0D2C02C61AB8394400A45056 /* Images.xcassets in Resources */,
 			);
@@ -436,6 +453,7 @@
 				0D2C03141AB83C8500A45056 /* AFNetworkReachabilityManager.m in Sources */,
 				0D2C031E1AB83C8500A45056 /* UIImageView+AFNetworking.m in Sources */,
 				0D2C03121AB83C8400A45056 /* AFHTTPRequestOperationManager.m in Sources */,
+				0D2C033E1AB89D8200A45056 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

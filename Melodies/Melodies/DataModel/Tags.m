@@ -63,13 +63,13 @@ NSString *const kTagsIsFullCatalogEnabled = @"isFullCatalogEnabled";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.position] forKey:kTagsPosition];
-    [mutableDict setValue:[NSNumber numberWithBool:self.isBlockDisplayMode] forKey:kTagsIsBlockDisplayMode];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.tagsIdentifier] forKey:kTagsId];
+    [mutableDict setValue:@(self.position) forKey:kTagsPosition];
+    [mutableDict setValue:@(self.isBlockDisplayMode) forKey:kTagsIsBlockDisplayMode];
+    [mutableDict setValue:@(self.tagsIdentifier) forKey:kTagsId];
     [mutableDict setValue:self.title forKey:kTagsTitle];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.topMelodiesCount] forKey:kTagsTopMelodiesCount];
-    [mutableDict setValue:[NSNumber numberWithBool:self.limitedVisibility] forKey:kTagsLimitedVisibility];
-    [mutableDict setValue:[NSNumber numberWithBool:self.isFullCatalogEnabled] forKey:kTagsIsFullCatalogEnabled];
+    [mutableDict setValue:@(self.topMelodiesCount) forKey:kTagsTopMelodiesCount];
+    [mutableDict setValue:@(self.limitedVisibility) forKey:kTagsLimitedVisibility];
+    [mutableDict setValue:@(self.isFullCatalogEnabled) forKey:kTagsIsFullCatalogEnabled];
 
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
@@ -82,14 +82,14 @@ NSString *const kTagsIsFullCatalogEnabled = @"isFullCatalogEnabled";
 #pragma mark - Helper Method
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict
 {
-    id object = [dict objectForKey:aKey];
+    id object = dict[aKey];
     return [object isEqual:[NSNull null]] ? nil : object;
 }
 
 
 #pragma mark - NSCoding Methods
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
 

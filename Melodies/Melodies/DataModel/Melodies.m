@@ -70,7 +70,7 @@ NSString *const kMelodiesBonusCode = @"bonusCode";
             self.fPrice = [[self objectOrNilForKey:kMelodiesFPrice fromDictionary:dict] doubleValue];
             self.active = [[self objectOrNilForKey:kMelodiesActive fromDictionary:dict] boolValue];
             self.picUrl = [self objectOrNilForKey:kMelodiesPicUrl fromDictionary:dict];
-    NSObject *receivedTags = [dict objectForKey:kMelodiesTags];
+    NSObject *receivedTags = dict[kMelodiesTags];
     NSMutableArray *parsedTags = [NSMutableArray array];
     if ([receivedTags isKindOfClass:[NSArray class]]) {
         for (NSDictionary *item in (NSArray *)receivedTags) {
@@ -103,10 +103,10 @@ NSString *const kMelodiesBonusCode = @"bonusCode";
 - (NSDictionary *)dictionaryRepresentation
 {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionary];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.melodiesIdentifier] forKey:kMelodiesId];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.necTag] forKey:kMelodiesNecTag];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.fPrice] forKey:kMelodiesFPrice];
-    [mutableDict setValue:[NSNumber numberWithBool:self.active] forKey:kMelodiesActive];
+    [mutableDict setValue:@(self.melodiesIdentifier) forKey:kMelodiesId];
+    [mutableDict setValue:@(self.necTag) forKey:kMelodiesNecTag];
+    [mutableDict setValue:@(self.fPrice) forKey:kMelodiesFPrice];
+    [mutableDict setValue:@(self.active) forKey:kMelodiesActive];
     [mutableDict setValue:self.picUrl forKey:kMelodiesPicUrl];
     NSMutableArray *tempArrayForTags = [NSMutableArray array];
     for (NSObject *subArrayObject in self.tags) {
@@ -122,10 +122,10 @@ NSString *const kMelodiesBonusCode = @"bonusCode";
     [mutableDict setValue:self.title forKey:kMelodiesTitle];
     [mutableDict setValue:self.code forKey:kMelodiesCode];
     [mutableDict setValue:self.price forKey:kMelodiesPrice];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.purchasePeriod] forKey:kMelodiesPurchasePeriod];
+    [mutableDict setValue:@(self.purchasePeriod) forKey:kMelodiesPurchasePeriod];
     [mutableDict setValue:self.demoUrl forKey:kMelodiesDemoUrl];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.artistId] forKey:kMelodiesArtistId];
-    [mutableDict setValue:[NSNumber numberWithDouble:self.relevance] forKey:kMelodiesRelevance];
+    [mutableDict setValue:@(self.artistId) forKey:kMelodiesArtistId];
+    [mutableDict setValue:@(self.relevance) forKey:kMelodiesRelevance];
     [mutableDict setValue:self.validDate forKey:kMelodiesValidDate];
     [mutableDict setValue:self.artist forKey:kMelodiesArtist];
     [mutableDict setValue:self.bonusCode forKey:kMelodiesBonusCode];
@@ -141,14 +141,14 @@ NSString *const kMelodiesBonusCode = @"bonusCode";
 #pragma mark - Helper Method
 - (id)objectOrNilForKey:(id)aKey fromDictionary:(NSDictionary *)dict
 {
-    id object = [dict objectForKey:aKey];
+    id object = dict[aKey];
     return [object isEqual:[NSNull null]] ? nil : object;
 }
 
 
 #pragma mark - NSCoding Methods
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
 

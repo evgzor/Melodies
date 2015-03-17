@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSArray *melodies;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
+- (instancetype)initWithDictionary:(NSDictionary *)dict NS_DESIGNATED_INITIALIZER;
 - (NSDictionary *)dictionaryRepresentation;
 
 @end

@@ -20,7 +20,7 @@
 @property (nonatomic, assign) BOOL isFullCatalogEnabled;
 
 + (instancetype)modelObjectWithDictionary:(NSDictionary *)dict;
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
+- (instancetype)initWithDictionary:(NSDictionary *)dict NS_DESIGNATED_INITIALIZER;
 - (NSDictionary *)dictionaryRepresentation;
 
 @end

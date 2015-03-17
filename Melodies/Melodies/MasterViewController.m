@@ -11,18 +11,24 @@
 #import "APINetController.h"
 #import "Melodies.h"
 #import "MelodyTableViewCell.h"
+#import "MBProgressHUD.h"
+#import "MBProgressHUD.h"
 
+#define REQUEST_NUMBER 20
 static NSString *CellIdentifier = @"Cell";
 
 @interface MasterViewController ()
 
 @property NSMutableArray *dataObjects;
 @property NSInteger curentPage;
+@property MBProgressHUD *hud;
 
 @end
 
 @implementation MasterViewController
 
+
+#pragma mark - View Life Cycle
 - (void)awakeFromNib {
     [super awakeFromNib];
 }
@@ -30,33 +36,26 @@ static NSString *CellIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     _curentPage = 0;
-     //[self.tableView registerClass:[MelodyTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    _dataObjects = [@[] mutableCopy];
     
-    [APINetController requestListDataFrom:0 forLimit:20 withSuccess:^(NSArray *dataList) {
-        self.dataObjects = [dataList mutableCopy];
-        dispatch_async (dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-
-    } andErrorFail:^(NSError *error) {
-        
-    }];
-
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud.mode = MBProgressHUDModeIndeterminate;
+    _hud.labelText = @"Loading";
+    
+    [self requestDataFromServer];
 }
 
+#pragma mark - Memory managment
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*- (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
-    }
-    [self.objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-}*/
+-(void)dealloc
+{
+    self.dataObjects = nil;
+}
+
 
 #pragma mark - Segues
 
@@ -95,20 +94,11 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int lastRow= _dataObjects.count -1;
+    int lastRow= _dataObjects.count - REQUEST_NUMBER/2;
     if(indexPath.row == lastRow)
     {
-            [APINetController requestListDataFrom:_curentPage*20 forLimit:20*(_curentPage+1) withSuccess:^(NSArray *dataList) {
-                [_dataObjects addObjectsFromArray:dataList];
-                dispatch_async (dispatch_get_main_queue(), ^{
-                    _curentPage++;
-                    [self.tableView reloadData];
-                });
-                
-                
-            } andErrorFail:^(NSError *error) {
-                
-            }]; //Method to request to server to get more data
+        [self requestDataFromServer];
+
     }
 }
 
@@ -124,6 +114,25 @@ static NSString *CellIdentifier = @"Cell";
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
+}
+
+#pragma mark - server processing
+-(void)requestDataFromServer
+{
+    
+    
+    [APINetController requestListDataFrom:_curentPage*REQUEST_NUMBER forLimit:REQUEST_NUMBER*(_curentPage + 1) withSuccess:^(NSArray *dataList) {
+        [_dataObjects addObjectsFromArray:dataList];
+        _curentPage++;
+        dispatch_async (dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [_hud hide:YES];
+        });
+    } andErrorFail:^(NSError *error) {
+        [_hud hide:YES];
+        [[[UIAlertView alloc] initWithTitle:@"Network error" message:@"Cannot retrieve data" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil] show];
+        
+    }]; //Method to request to server to get more data
 }
 
 @end

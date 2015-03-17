@@ -9,6 +9,8 @@
 #import "DetailViewController.h"
 #import "AsyncImageView.h"
 
+#define ERR_COOF 1.5f
+
 @import AVFoundation;
 
 
@@ -73,7 +75,7 @@
 
 - (void)updateSlider {
     // Update the slider about the music time
-    double duration = CMTimeGetSeconds(_audioPlayer.currentItem.duration);
+    double duration = CMTimeGetSeconds(_audioPlayer.currentItem.duration)/ERR_COOF;
     double time = CMTimeGetSeconds(_audioPlayer.currentTime);
     _aSlider.value = (CGFloat) (time / duration);
 }
@@ -81,11 +83,12 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [_audioPlayer pause];
+    [_sliderTimer invalidate];
 }
 
 - (IBAction)sliderChanged:(UISlider *)sender {
     // Fast skip the music when user scroll the UISlider
-    CMTime seekTime = CMTimeMake(CMTimeGetSeconds(_audioPlayer.currentItem.asset.duration)*sender.value*2/3, 1);
+    CMTime seekTime = CMTimeMake(CMTimeGetSeconds(_audioPlayer.currentItem.asset.duration)*sender.value/ERR_COOF, 1);
     [_audioPlayer seekToTime:seekTime];
 }
 
