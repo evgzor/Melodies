@@ -54,6 +54,7 @@ static NSString *CellIdentifier = @"Cell";
 -(void)dealloc
 {
     self.dataObjects = nil;
+    self.hud = nil;
 }
 
 
@@ -129,8 +130,11 @@ static NSString *CellIdentifier = @"Cell";
             [_hud hide:YES];
         });
     } andErrorFail:^(NSError *error) {
-        [_hud hide:YES];
-        [[[UIAlertView alloc] initWithTitle:@"Network error" message:@"Cannot retrieve data" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil] show];
+        dispatch_async (dispatch_get_main_queue(), ^{
+            [_hud hide:YES];
+             [[[UIAlertView alloc] initWithTitle:@"Network error" message:@"Cannot retrieve data" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil] show];
+        });
+
         
     }]; //Method to request to server to get more data
 }
