@@ -81,20 +81,22 @@ static NSString *CellIdentifier = @"Cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MelodyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
-    cell.coverPhoto.image = nil;
+    cell.coverPhoto.image = [UIImage imageNamed:@"Placeholder"];
+    cell.coverPhoto.imageURL = nil;
     [cell setNeedsDisplay];
     
     Melodies *object = self.dataObjects[indexPath.row];
     cell.coverPhoto.imageURL = [NSURL URLWithString:object.picUrl];
     cell.melodyArtist.text = [NSString stringWithFormat:@"Artist : %@",object.artist];
     cell.melodyTitle.text = [NSString stringWithFormat:@"Title : %@",object.title];
-
+    
     
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     NSUInteger lastRow= _dataObjects.count - REQUEST_NUMBER/2;
     if(indexPath.row == lastRow)
     {
