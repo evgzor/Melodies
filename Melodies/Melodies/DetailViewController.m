@@ -96,7 +96,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillDisappear:animated];
     [_audioPlayer pause];
     [_sliderTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
